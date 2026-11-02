@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#183c2b">
+    <title>Harvest — Regional harvest planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Harvest home">
+        <span class="brand-mark" aria-hidden="true">H</span>
+        <span>harvest<span class="brand-period">.</span></span>
+      </a>
+      <div class="topbar-meta"><span class="status-dot"></span> SOUTH AFRICA <span class="meta-divider">/</span> FIELD PLANNER</div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> PLAN WITH THE SEASONS</div>
+          <h1>A better harvest<br>starts <em>here.</em></h1>
+          <p>Get a regional harvest window from South Africa’s crop calendar, with an experimental model comparison and optional AI guidance.</p>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="sun"></div>
+          <div class="field field-back"></div>
+          <div class="field field-mid"></div>
+          <div class="field field-front"></div>
+          <div class="plant plant-one"><i></i><b></b></div>
+          <div class="plant plant-two"><i></i><b></b></div>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Harvest planner">
+        <div class="form-card">
+          <div class="card-heading">
+            <div class="step-number">01</div>
+            <div><h2>Your field</h2><p>Tell us what and where you’re growing.</p></div>
+          </div>
+          <form id="prediction-form">
+            <label for="crop">Crop</label>
+            <div class="select-wrap"><select id="crop" name="crop" required><option value="">Loading crops…</option></select><span class="select-arrow">⌄</span></div>
+
+            <label for="region">Province / region</label>
+            <div class="select-wrap"><select id="region" name="region" required disabled><option value="">Choose a crop first</option></select><span class="select-arrow">⌄</span></div>
+
+            <label for="planting-date">Planting date</label>
+            <input id="planting-date" name="planting_date" type="date" required>
+            <p class="field-hint">The date is checked against the regional planting season.</p>
+
+            <button class="button button-primary" id="predict-button" type="submit">
+              <span>Estimate harvest window</span><span class="button-arrow" aria-hidden="true">↗</span>
+            </button>
+          </form>
+          <div class="data-note"><span class="note-icon">i</span><span>Regional estimates are a guide, not a field-level maturity assessment.</span></div>
+        </div>
+
+        <div class="result-column">
+          <div class="result-card" id="result-card">
+            <div class="empty-state" id="empty-state">
+              <div class="empty-icon" aria-hidden="true"><span></span><span></span><span></span></div>
+              <p class="eyebrow">YOUR FORECAST</p>
+              <h2>Your harvest window<br>will appear here.</h2>
+              <p>Choose your crop, region and planting date to get started.</p>
+            </div>
+            <div id="result-content" hidden>
+              <div class="result-overline"><span class="result-check">✓</span> REGIONAL CALENDAR ESTIMATE</div>
+              <p class="result-label">EXPECTED HARVEST WINDOW</p>
+              <h2 class="harvest-dates" id="harvest-dates"></h2>
+              <div class="result-summary" id="result-summary"></div>
+              <div class="result-details">
+                <div><span>Crop</span><strong id="result-crop"></strong></div>
+                <div><span>Region</span><strong id="result-region"></strong></div>
+                <div><span>Planted</span><strong id="result-planted"></strong></div>
+                <div><span>Calendar code</span><strong class="code" id="calendar-code"></strong></div>
+              </div>
+              <div class="model-box" id="model-box"></div>
+              <div class="result-disclaimer" id="result-note"></div>
+              <button class="button button-ai" id="analysis-button" type="button">
+                <span class="sparkle" aria-hidden="true">✳</span><span>Get AI field guidance</span><span class="button-arrow" aria-hidden="true">↗</span>
+              </button>
+              <div class="ai-result" id="ai-result" hidden>
+                <div class="ai-heading"><span class="sparkle">✳</span> AI AGRICULTURAL GUIDANCE</div>
+                <div id="analysis-text" class="analysis-text"></div>
+              </div>
+            </div>
+          </div>
+          <div class="footnote"><span>✳</span> AI guidance is general information. Always verify conditions in your field.</div>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>HARVEST PLANNER</span><span>South African regional crop calendar <i>•</i> Estimates, not guarantees</span></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
